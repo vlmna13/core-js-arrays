@@ -460,8 +460,10 @@ function getIndicesOfOddNumbers(numbers) {
  *    getHexRGBValues([ 0, 255, 16777215]) => [ '#000000', '#0000FF', '#FFFFFF' ]
  *    getHexRGBValues([]) => []
  */
-function getHexRGBValues(/* arr */) {
-  throw new Error('Not implemented');
+function getHexRGBValues(arr) {
+  return arr.map((el) => {
+    return `#${el.toString(16).toUpperCase().padStart(6, 0)}`;
+  });
 }
 
 /**
@@ -517,8 +519,23 @@ function findCommonElements(arr1, arr2) {
  *    findLongestIncreasingSubsequence([3, 10, 2, 1, 20]) => 2
  *    findLongestIncreasingSubsequence([50, 3, 10, 7, 40, 80]) => 3
  */
-function findLongestIncreasingSubsequence(/* nums */) {
-  throw new Error('Not implemented');
+function findLongestIncreasingSubsequence(nums) {
+  let result = 1;
+  let counter = 0;
+  nums.map((item, index) => {
+    if (nums[index + 1]) {
+      if (item < nums[index + 1]) {
+        result += 1;
+        if (result > counter) {
+          counter = result;
+        }
+      } else {
+        result = 1;
+      }
+    }
+    return item;
+  });
+  return counter;
 }
 
 /**
@@ -535,8 +552,16 @@ function findLongestIncreasingSubsequence(/* nums */) {
  *  propagateItemsByPositionIndex([ 'a', 'b', 'c', null ]) => [ 'a', 'b', 'b', 'c', 'c', 'c',  null, null, null, null ]
  *  propagateItemsByPositionIndex([ 1,2,3,4,5 ]) => [ 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5 ]
  */
-function propagateItemsByPositionIndex(/* arr */) {
-  throw new Error('Not implemented');
+function propagateItemsByPositionIndex(arr) {
+  if (arr.length === 0) {
+    return [];
+  }
+  const arr1 = [];
+  arr.map((el, index) => {
+    const chunk = new Array(index + 1).fill(el);
+    return arr1.push(chunk);
+  });
+  return arr1.flat();
 }
 
 /**
@@ -604,8 +629,17 @@ function sortDigitNamesByNumericOrder(arr) {
  *   swapHeadAndTail([]) => []
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
+function swapHeadAndTail(arr) {
+  if (arr.length <= 1) {
+    return arr;
+  }
+  const head = arr.slice(0, Math.floor(arr.length / 2));
+  const tail = arr.slice(-Math.floor(arr.length / 2));
+  if (arr.length % 2 === 1) {
+    const middleEl = arr[Math.ceil(arr.length / 2 - 1)];
+    return tail.concat(middleEl, head);
+  }
+  return tail.concat(head);
 }
 
 module.exports = {
